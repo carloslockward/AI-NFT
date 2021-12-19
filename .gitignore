@@ -1,5 +1,9 @@
 #My stuff
 dataset/
+videos-gif/
+.vscode/
+generated/
+mnist/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

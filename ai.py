@@ -12,8 +12,10 @@ def calculate_aspect(width: int, height: int) -> str:
     y = int(height / r)
     return x, y
 
+
 def get_file_list(drtr):
     return [f for f in listdir(drtr) if isfile(join(drtr, f))]
+
 
 def get_avg_img_size(drtr):
     file_list = get_file_list(drtr)
@@ -21,13 +23,16 @@ def get_avg_img_size(drtr):
     avg_y = 0
     for file in file_list:
         try:
-            x,y = imagesize.get(drtr + file)
+            x, y = imagesize.get(drtr + file)
         except Exception as e:
-            raise Exception(f"Could not get image size for file: {file} \nException: {e}")
-        
+            raise Exception(
+                f"Could not get image size for file: {file} \nException: {e}"
+            )
+
         avg_x += x
         avg_y += y
-    return avg_x/len(file_list), avg_y/len(file_list)
+    return avg_x / len(file_list), avg_y / len(file_list)
+
 
 def get_avg_aspect_ratio(drtr):
 
@@ -38,15 +43,44 @@ def get_avg_aspect_ratio(drtr):
         try:
             width, height = imagesize.get(drtr + file)
         except Exception as e:
-            raise Exception(f"Could not get image size for file: {file} \nException: {e}")
+            raise Exception(
+                f"Could not get image size for file: {file} \nException: {e}"
+            )
 
-        avg_ratio += width/height
+        avg_ratio += width / height
 
-    return round(avg_ratio/len(file_list), 1).as_integer_ratio()
+    return round(avg_ratio / len(file_list), 1).as_integer_ratio()
+
 
 def get_default_device():
     if T.cuda.is_available():
-        return T.device('cuda')
+        return T.device("cuda")
     else:
-        return T.device('cpu')
+        return T.device("cpu")
 
+
+def to_device(data, device):
+    if isinstance(data, (list, tuple)):
+        return [to_device(x, device) for x in data]
+    return data.to(device, non_blocking=True)
+
+
+def count_parameters(model):
+    return sum(p.numel() for p in model.parameters() if p.requires_grad)
+
+
+class DeviceDataLoader:
+    """Wrap a dataloader to move data to a device"""
+
+    def __init__(self, dl, device):
+        self.dl = dl
+        self.device = device
+
+    def __iter__(self):
+        """Yield a batch of data after moving it to device"""
+        for b in self.dl:
+            yield to_device(b, self.device)
+
+    def __len__(self):
+        """Number of batches"""
+        return len(self.dl)
