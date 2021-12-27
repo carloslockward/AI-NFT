@@ -4,6 +4,12 @@ videos-gif/
 .vscode/
 generated/
 mnist/
+new_dataset/
+test/
+*.exe
+*-old.*
+
+*.*_i
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
