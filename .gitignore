@@ -10,6 +10,10 @@ test/
 *-old.*
 api_keys.py
 *.*_i
+failed/
+ignore/
+gif-frames/
+gifs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

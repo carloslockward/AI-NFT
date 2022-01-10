@@ -69,6 +69,22 @@ def count_parameters(model):
     return sum(p.numel() for p in model.parameters() if p.requires_grad)
 
 
+class AddGaussianNoise(object):
+    def __init__(self, mean=0.0, std=1.0):
+        self.std = std
+        self.mean = mean
+
+    def __call__(self, tensor: T.Tensor):
+        return (
+            tensor + T.randn(tensor.size(), device=tensor.device) * self.std + self.mean
+        )
+
+    def __repr__(self):
+        return self.__class__.__name__ + "(mean={0}, std={1})".format(
+            self.mean, self.std
+        )
+
+
 class DeviceDataLoader:
     """Wrap a dataloader to move data to a device"""
 

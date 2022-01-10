@@ -126,16 +126,22 @@ if not dataset_path.exists():
 url_list = [
     # "pop-wonder-editions",
     # "cryptocoven",
-    "clonex",
-    "boredapeyachtclub",
-    "cryptopunks",
-    "womenandweapons",
-    "chinese-zodiac-metaverse-by-yassartlabs",
-    "bofadeeznuts",
-    "divineanarchy",
-    "slotienft",
-    "doodles-official",
-    "smilesssvrs",
+    # "clonex",
+    # "boredapeyachtclub",
+    # "cryptopunks",
+    # "womenandweapons",
+    # "chinese-zodiac-metaverse-by-yassartlabs",
+    # "bofadeeznuts",
+    # "divineanarchy",
+    # "slotienft",
+    # "doodles-official",
+    # "smilesssvrs",
+    "apocalyptic-apes",
+    "earc",
+    "ape-gang-old",
+    "great-ape-society",
+    "apes-in-space-nft",
+    "apesofspace-official",
 ]
 
 # print(len(get_image_urls("pop-wonder-editions", 10000)))
@@ -145,7 +151,7 @@ t = tqdm(url_list)
 
 
 for artist in t:
-    ##### Web scrapper for infinite scrolling page #####
+
     artist_path = Path(f"./new_dataset/{artist}/")
     if not artist_path.exists():
         artist_path.mkdir()
